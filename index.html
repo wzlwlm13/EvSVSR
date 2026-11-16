@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="EvSVSR: Event-Guided Stereo Video Super-Resolution">
+  <meta name="keywords" content="EvSVSR, event camera, stereo video super-resolution, event-guided video super-resolution, stereo consistency">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EvSVSR</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#top"><strong>EvSVSR</strong></a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href="#demos">Video Demos</a>
+        <a class="navbar-item" href="#abstract">Abstract</a>
+        <a class="navbar-item" href="#method">Method</a>
+        <a class="navbar-item" href="#results">Results</a>
+        <a class="navbar-item" href="#qualitative">Visual Comparison</a>
+        <a class="navbar-item" href="#bibtex">BibTeX</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero gs-hero" id="top">
+    <div class="hero-body">
+      <div class="container is-max-widescreen">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Event-Guided Stereo Video Super-Resolution</h1>
+            <div class="is-size-5 publication-authors" style="margin-top: 1rem;">
+              <span class="author-block">Hanyu Xuan<sup>1</sup>,</span>
+              <span class="author-block">Youtao Yao<sup>1</sup>,</span>
+              <span class="author-block">Cheng Zhao<sup>2</sup>,</span>
+              <span class="author-block">Kun Li<sup>3</sup>,</span>
+              <span class="author-block">Xin Du<sup>4</sup>,</span>
+              <span class="author-block">Fei Wang<sup>5</sup>,</span>
+              <span class="author-block">Zhiliang Wu<sup>6</sup></span>
+            </div>
+            <div class="is-size-6 publication-affiliations">
+              <span class="author-block"><sup>1</sup>Anhui University</span>
+              <span class="author-block"><sup>2</sup>Shenzhen University</span>
+              <span class="author-block"><sup>3</sup>United Arab Emirates University</span>
+              <span class="author-block"><sup>4</sup>Zhejiang University</span>
+              <span class="author-block"><sup>5</sup>Institute of Artificial Intelligence, Hefei Comprehensive National Science Center</span>
+              <span class="author-block"><sup>6</sup>Nanyang Technological University</span>
+            </div>
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#bibtex" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span>
+                  <span>BibTeX</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section teaser-section" id="demos">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Video Demos</h2>
+      <div class="demo-block">
+        <h3 class="title is-5 demo-label">DSEC<br><span>(Real-World)</span></h3>
+        <figure class="image paper-figure demo-figure">
+          <video class="demo-video" autoplay muted loop playsinline preload="auto" aria-label="Video demo on DSEC">
+            <source src="./static/videos/dsec_demo.mp4" type="video/mp4">
+          </video>
+        </figure>
+      </div>
+      <div class="demo-block">
+        <h3 class="title is-5 demo-label">SVSR-Set<br><span>(Synthetic)</span></h3>
+        <figure class="image paper-figure demo-figure">
+          <video class="demo-video" autoplay muted loop playsinline preload="auto" aria-label="Video demo on SVSR-Set">
+            <source src="./static/videos/svsr_demo.mp4" type="video/mp4">
+          </video>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Stereo Video Super-Resolution (SVSR) aims to reconstruct high-resolution stereo videos by exploiting temporal cues across consecutive frames and complementary spatial cues between stereo views. However, existing methods struggle to recover high-frequency texture details under rapid motion and complex illumination, compromising reconstruction quality and stereo consistency. Event cameras provide valuable motion and texture cues with high temporal resolution and wide dynamic range, yet their potential for SVSR remains underexplored. To bridge this gap, we present the first investigation of event-guided SVSR and propose a novel framework. Specifically, we develop an Event-Guided Texture Enhancement (EGTE) module that combines bidirectional temporal feature propagation with event-guided texture refinement to restore high-frequency details in complex motion regions. Subsequently, we introduce a Cross-View Texture Interaction (CVTI) module to model cross-view spatial correspondences and aggregate cross-view complementary texture information. With this design, our method effectively integrates event-driven motion and texture information, inter-frame temporal dependencies, and cross-view spatial relationships to recover motion-affected details and maintain stereo consistency. Extensive experiments on both real-world and synthetic datasets demonstrate that our method consistently outperforms existing super-resolution methods in reconstruction quality and stereo consistency.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <figure class="image paper-figure">
+        <img src="./static/images/framework.png" alt="Overview of the proposed EvSVSR framework">
+      </figure>
+      <div class="content has-text-justified method-text">
+        <p>Overview of the proposed Event-guided Stereo Video Super-Resolution (EvSVSR) framework. Our EvSVSR consists of two core modules: Event-Guided Texture Enhancement (EGTE) and Cross-View Texture Interaction (CVTI). The EGTE module performs bidirectional recurrent propagation to align intra-view temporal features to the current frame, while the CVTI module establishes cross-view spatial correspondences to facilitate bidirectional feature interaction across stereo views. The pre-trained SPyNet is adopted for optical flow estimation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Quantitative Results</h2>
+      <div class="tabs is-centered is-toggle is-small degradation-tabs">
+        <ul>
+          <li class="is-active" data-target="res-dsec"><a>DSEC (Real-World)</a></li>
+          <li data-target="res-svsrset"><a>SVSR-Set (Synthetic)</a></li>
+        </ul>
+      </div>
+      <div class="vis-panel" id="res-dsec">
+        <div class="table-container">
+          <table class="table is-bordered is-hoverable is-fullwidth results-table is-narrow svsr-table">
+          <thead>
+            <tr>
+              <th rowspan="2" colspan="2">Method</th>
+              <th colspan="4">Left view</th>
+              <th colspan="4">Right view</th>
+              <th colspan="4">Average</th>
+              <th rowspan="2">EPE &darr;</th>
+            </tr>
+            <tr>
+              <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th><th>E<sub>warp</sub> &darr;</th>
+              <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th><th>E<sub>warp</sub> &darr;</th>
+              <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th><th>E<sub>warp</sub> &darr;</th>
+            </tr>
+          </thead>
+          <tbody>
+                <tr><td class="cat-cell" rowspan="6">i)</td><td>BasicVSR++</td><td>27.84</td><td>0.831</td><td>0.385</td><td>0.044</td><td>28.70</td><td>0.841</td><td>0.379</td><td>0.032</td><td>28.27</td><td>0.836</td><td>0.382</td><td>0.038</td><td>2.289</td></tr>
+                <tr><td>SAVSR</td><td>29.73</td><td>0.882</td><td>0.366</td><td>0.039</td><td>30.50</td><td>0.889</td><td>0.360</td><td>0.028</td><td>30.12</td><td>0.885</td><td>0.363</td><td>0.034</td><td>2.029</td></tr>
+                <tr><td>DLoRAL</td><td>27.60</td><td>0.787</td><td>0.371</td><td>0.032</td><td>27.90</td><td>0.788</td><td>0.373</td><td>0.030</td><td>27.75</td><td>0.788</td><td>0.372</td><td>0.031</td><td>6.241</td></tr>
+                <tr><td>RealViformer</td><td>30.73</td><td>0.880</td><td>0.305</td><td>0.013</td><td>31.56</td><td>0.886</td><td>0.303</td><td>0.011</td><td>31.15</td><td>0.883</td><td>0.304</td><td>0.012</td><td>4.184</td></tr>
+                <tr><td>UltraVSR</td><td>27.05</td><td>0.804</td><td>0.354</td><td>0.040</td><td>27.19</td><td>0.805</td><td>0.353</td><td>0.038</td><td>27.12</td><td>0.805</td><td>0.353</td><td>0.039</td><td>3.172</td></tr>
+                <tr><td>DOVE</td><td>30.03</td><td>0.864</td><td>0.332</td><td>0.013</td><td>30.61</td><td>0.871</td><td>0.329</td><td>0.012</td><td>30.32</td><td>0.867</td><td>0.331</td><td>0.013</td><td>4.655</td></tr>
+                <tr><td class="cat-cell" rowspan="2">ii)</td><td>EvTexture</td><td>28.24</td><td>0.844</td><td>0.390</td><td>0.051</td><td>29.25</td><td>0.855</td><td>0.384</td><td>0.038</td><td>28.75</td><td>0.849</td><td>0.387</td><td>0.045</td><td>2.990</td></tr>
+                <tr><td>EBVSR</td><td>29.54</td><td>0.871</td><td>0.364</td><td>0.037</td><td>30.69</td><td>0.881</td><td>0.359</td><td>0.026</td><td>30.12</td><td>0.876</td><td>0.362</td><td>0.032</td><td>1.964</td></tr>
+                <tr><td class="cat-cell" rowspan="3">iii)</td><td>SSRDE-FNet</td><td>28.40</td><td>0.864</td><td>0.372</td><td>0.050</td><td>29.31</td><td>0.873</td><td>0.366</td><td>0.037</td><td>28.86</td><td>0.868</td><td>0.369</td><td>0.044</td><td>2.204</td></tr>
+                <tr><td>iPASSR</td><td>28.50</td><td>0.862</td><td>0.369</td><td>0.048</td><td>29.33</td><td>0.870</td><td>0.363</td><td>0.036</td><td>28.92</td><td>0.866</td><td>0.366</td><td>0.042</td><td>2.233</td></tr>
+                <tr><td>NAFSSR</td><td>28.21</td><td>0.890</td><td>0.360</td><td>0.048</td><td>29.05</td><td>0.897</td><td>0.354</td><td>0.036</td><td>28.63</td><td>0.893</td><td>0.357</td><td>0.042</td><td>1.877</td></tr>
+                <tr><td class="cat-cell" rowspan="2">iv)</td><td>StereoVSR</td><td>34.25</td><td>0.921</td><td>0.313</td><td>0.010</td><td>35.34</td><td>0.928</td><td>0.310</td><td>0.008</td><td>34.80</td><td>0.925</td><td>0.312</td><td>0.009</td><td>1.691</td></tr>
+                <tr><td>Trans-SVSR</td><td>32.68</td><td>0.904</td><td>0.354</td><td>0.015</td><td>33.79</td><td>0.912</td><td>0.349</td><td>0.011</td><td>33.24</td><td>0.908</td><td>0.352</td><td>0.013</td><td>1.749</td></tr>
+                <tr class="ours-row"><td colspan="2"><strong>Ours</strong></td><td><strong>36.78</strong></td><td><strong>0.944</strong></td><td><strong>0.260</strong></td><td><strong>0.008</strong></td><td><strong>37.96</strong></td><td><strong>0.949</strong></td><td><strong>0.256</strong></td><td><strong>0.006</strong></td><td><strong>37.37</strong></td><td><strong>0.947</strong></td><td><strong>0.258</strong></td><td><strong>0.007</strong></td><td><strong>1.376</strong></td></tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="vis-panel" id="res-svsrset" hidden>
+        <div class="table-container">
+          <table class="table is-bordered is-hoverable is-fullwidth results-table is-narrow svsr-table">
+          <thead>
+            <tr>
+              <th rowspan="2" colspan="2">Method</th>
+              <th colspan="4">Left view</th>
+              <th colspan="4">Right view</th>
+              <th colspan="4">Average</th>
+              <th rowspan="2">EPE &darr;</th>
+            </tr>
+            <tr>
+              <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th><th>E<sub>warp</sub> &darr;</th>
+              <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th><th>E<sub>warp</sub> &darr;</th>
+              <th>PSNR &uarr;</th><th>SSIM &uarr;</th><th>LPIPS &darr;</th><th>E<sub>warp</sub> &darr;</th>
+            </tr>
+          </thead>
+          <tbody>
+                <tr><td class="cat-cell" rowspan="6">i)</td><td>BasicVSR++</td><td>27.38</td><td>0.876</td><td>0.254</td><td>0.006</td><td>26.75</td><td>0.868</td><td>0.260</td><td>0.006</td><td>27.07</td><td>0.872</td><td>0.257</td><td>0.006</td><td>2.649</td></tr>
+                <tr><td>SAVSR</td><td>27.49</td><td>0.880</td><td>0.241</td><td>0.005</td><td>26.91</td><td>0.873</td><td>0.246</td><td>0.006</td><td>27.20</td><td>0.877</td><td>0.244</td><td>0.006</td><td>2.624</td></tr>
+                <tr><td>DLoRAL</td><td>27.23</td><td>0.809</td><td>0.390</td><td>0.006</td><td>26.89</td><td>0.810</td><td>0.388</td><td>0.006</td><td>27.06</td><td>0.809</td><td>0.389</td><td>0.006</td><td>6.465</td></tr>
+                <tr><td>RealViformer</td><td>29.72</td><td>0.891</td><td>0.280</td><td><strong>0.001</strong></td><td>29.10</td><td>0.886</td><td>0.285</td><td>0.002</td><td>29.41</td><td>0.888</td><td>0.282</td><td>0.002</td><td>4.410</td></tr>
+                <tr><td>UltraVSR</td><td>25.65</td><td>0.817</td><td>0.326</td><td>0.008</td><td>25.38</td><td>0.816</td><td>0.327</td><td>0.008</td><td>25.52</td><td>0.817</td><td>0.327</td><td>0.008</td><td>4.073</td></tr>
+                <tr><td>DOVE</td><td>29.65</td><td>0.884</td><td>0.275</td><td>0.002</td><td>29.13</td><td>0.882</td><td>0.275</td><td>0.002</td><td>29.39</td><td>0.883</td><td>0.275</td><td>0.002</td><td>4.974</td></tr>
+                <tr><td class="cat-cell" rowspan="2">ii)</td><td>EvTexture</td><td>27.17</td><td>0.878</td><td>0.251</td><td>0.006</td><td>26.30</td><td>0.861</td><td>0.258</td><td>0.008</td><td>26.74</td><td>0.869</td><td>0.255</td><td>0.007</td><td>3.342</td></tr>
+                <tr><td>EBVSR</td><td>27.91</td><td>0.882</td><td>0.265</td><td>0.004</td><td>27.30</td><td>0.875</td><td>0.271</td><td>0.005</td><td>27.61</td><td>0.879</td><td>0.268</td><td>0.005</td><td>2.645</td></tr>
+                <tr><td class="cat-cell" rowspan="3">iii)</td><td>SSRDE-FNet</td><td>26.82</td><td>0.875</td><td>0.262</td><td>0.007</td><td>26.34</td><td>0.870</td><td>0.266</td><td>0.008</td><td>26.58</td><td>0.872</td><td>0.264</td><td>0.008</td><td>2.697</td></tr>
+                <tr><td>iPASSR</td><td>27.04</td><td>0.877</td><td>0.261</td><td>0.007</td><td>26.52</td><td>0.872</td><td>0.264</td><td>0.007</td><td>26.78</td><td>0.874</td><td>0.262</td><td>0.007</td><td>2.707</td></tr>
+                <tr><td>NAFSSR</td><td>26.61</td><td>0.865</td><td>0.258</td><td>0.008</td><td>26.06</td><td>0.858</td><td>0.261</td><td>0.009</td><td>26.34</td><td>0.861</td><td>0.260</td><td>0.009</td><td>2.635</td></tr>
+                <tr><td class="cat-cell" rowspan="2">iv)</td><td>StereoVSR</td><td>31.82</td><td>0.926</td><td>0.220</td><td>0.014</td><td>31.23</td><td>0.921</td><td>0.223</td><td>0.015</td><td>31.53</td><td>0.924</td><td>0.222</td><td>0.015</td><td>2.407</td></tr>
+                <tr><td>Trans-SVSR</td><td>30.38</td><td>0.906</td><td>0.257</td><td>0.018</td><td>29.71</td><td>0.899</td><td>0.263</td><td>0.020</td><td>30.05</td><td>0.903</td><td>0.260</td><td>0.019</td><td>2.532</td></tr>
+                <tr class="ours-row"><td colspan="2"><strong>Ours</strong></td><td><strong>33.84</strong></td><td><strong>0.945</strong></td><td><strong>0.175</strong></td><td><strong>0.001</strong></td><td><strong>33.37</strong></td><td><strong>0.943</strong></td><td><strong>0.176</strong></td><td><strong>0.001</strong></td><td><strong>33.61</strong></td><td><strong>0.944</strong></td><td><strong>0.176</strong></td><td><strong>0.001</strong></td><td><strong>1.994</strong></td></tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="figure-caption">Quantitative comparison of representative methods for &times;4 stereo video super-resolution on DSEC and SVSR-Set datasets. &uarr;/&darr; indicates that higher/lower values are better. The best results are highlighted in bold. i) RGB-based VSR methods; ii) event-guided VSR methods; iii) RGB-based SISR methods; iv) RGB-based SVSR methods.</p>
+    </div>
+  </section>
+
+  <section class="section section-light" id="qualitative">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Visual Comparison</h2>
+      <div class="tabs is-centered is-toggle is-small degradation-tabs">
+        <ul>
+          <li class="is-active" data-target="vis-dsec"><a>DSEC (Real-World)</a></li>
+          <li data-target="vis-svsrset"><a>SVSR-Set (Synthetic)</a></li>
+        </ul>
+      </div>
+      <div class="vis-panel" id="vis-dsec">
+        <figure class="image paper-figure"><img src="./static/images/dsec_qualitative.jpg" alt="Qualitative comparison for x4 stereo video super-resolution on DSEC"></figure>
+        <p class="figure-caption">Qualitative comparison of existing methods for &times;4 stereo video super-resolution on the real-world DSEC. Best viewed at 400% zoom.</p>
+      </div>
+      <div class="vis-panel" id="vis-svsrset" hidden>
+        <figure class="image paper-figure"><img src="./static/images/svsrset_qualitative.jpg" alt="Qualitative comparison for x4 stereo video super-resolution on SVSR-Set"></figure>
+        <p class="figure-caption">Qualitative comparison of existing methods for &times;4 stereo video super-resolution on the synthetic SVSR-Set. Best viewed at 400% zoom.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="conclusion">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Conclusion</h2>
+      <div class="content has-text-justified">
+        <p>
+          In this paper, we present the first investigation of event information for SVSR and propose an event-guided SVSR framework. Our framework employs the EGTE module to recover high-frequency texture details in regions with complex motion and the CVTI module to exploit cross-view complementary information for better stereo consistency. Extensive experiments on real-world and synthetic datasets demonstrate that our method outperforms existing super-resolution methods in reconstruction quality and stereo consistency, while maintaining favorable computational efficiency. This work highlights the potential of event signals for stereo video restoration and provides new insights for future research.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-light" id="bibtex">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{xuan2026evsvsr,
+  author={Hanyu Xuan and Youtao Yao and Cheng Zhao and Kun Li and Xin Du and Fei Wang and Zhiliang Wu},
+  title={Event-Guided Stereo Video Super-Resolution},
+  journal={Under Review},
+  year={2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              Project page for <strong>EvSVSR</strong>.
+            </p>
+            <p>
+              Website template adapted from the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies project page</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.demo-video').forEach(function (v) {
+      v.muted = true;
+      v.addEventListener('ended', function () { v.currentTime = 0; v.play(); });
+      var p = v.play(); if (p && p.catch) { p.catch(function () {}); }
+    });
+    document.querySelectorAll('.degradation-tabs li').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var section = tab.closest('section');
+        section.querySelectorAll('.degradation-tabs li').forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+        section.querySelectorAll('.vis-panel').forEach(function (p) { p.hidden = (p.id !== tab.dataset.target); });
+      });
+    });
+  </script>
+</body>
+
+</html>
