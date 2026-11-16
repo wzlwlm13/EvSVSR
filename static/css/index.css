@@ -269,3 +269,6 @@ pre, .content pre { white-space: pre-wrap; word-break: break-word; }
 .svsr-table td.cat-cell { text-align: center !important; font-weight: 600; color: #55606d; background: #fafbfc; }
 .svsr-table .group-row td { text-align: center !important; }
 .svsr-table .ours-row td:first-child { text-align: center !important; }
+
+/* captions span the full container width */
+.figure-caption { max-width: none; }
